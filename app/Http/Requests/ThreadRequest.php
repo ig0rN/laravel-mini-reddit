@@ -24,7 +24,9 @@ class ThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'              => 'required|string',
+            'content'           => 'required|string',
+            'comments_visible'  => 'integer|min:0|max:1'
         ];
     }
 }
