@@ -13,6 +13,8 @@ trait Commentable
 
     public function addComment($comment)
     {
+        $comment['user_id'] = auth()->user()->id;
+
         return $this->comments()->create($comment);
     }
 }
