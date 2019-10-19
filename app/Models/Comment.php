@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Commentable;
 
 class Comment extends Model
 {
-    protected $guarded = ['id'];
+    use Commentable;
+
+    protected $guarded  = ['id'];
+    protected $with     = ['comments'];
 
     public function thread()
     {
@@ -16,15 +20,5 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(self::class);
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(self::class);
     }
 }

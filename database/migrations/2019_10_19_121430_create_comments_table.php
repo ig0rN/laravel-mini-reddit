@@ -17,15 +17,13 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
 
             $table->integer('user_id')->unsigned()->index();
-            $table->integer('thread_id')->unsigned()->index();
-            $table->integer('parent_id')->unsigned()->nullable()->index();
+            $table->integer('commented_id')->unsigned()->nullable();
+            $table->string('commented_type')->nullable();
 
             $table->longText('content');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
         });
     }
 

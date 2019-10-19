@@ -3,18 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Commentable;
 
 class Thread extends Model
 {
-    protected $guarded = ['id'];
+    use Commentable;
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
+    protected $guarded  = ['id'];
+    protected $with     = ['comments'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function canEdit()
+    {
+        return $this->created_at->diffInHours(Carbon::now()) >= 6 ? false : true;
     }
 }
