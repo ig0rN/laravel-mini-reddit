@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Commentable;
+use Carbon\Carbon;
 
 class Thread extends Model
 {

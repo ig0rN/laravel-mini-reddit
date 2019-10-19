@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Thread;
 use App\Http\Requests\ThreadRequest;
+use App\Http\Requests\CommentRequest;
 
 class ThreadController extends Controller
 {
@@ -14,7 +15,11 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        return Thread::all();
+        return response()->json([
+            'status'  => 200,
+            'message' => '',
+            'data'    => Thread::all()
+        ], 200);
     }
 
     /**
@@ -27,7 +32,11 @@ class ThreadController extends Controller
     {
         $thread = $request->user()->threads()->create($request->all());
         
-        return $thread;
+        return response()->json([
+            'status'  => 200,
+            'message' => 'You have successfully created a new thread.',
+            'data'    => $thread
+        ], 200);
     }
 
     /**
@@ -39,7 +48,11 @@ class ThreadController extends Controller
      */
     public function reply(CommentRequest $request, Thread $thread)
     {
-        return $thread->addComment($request->all());
+        return response()->json([
+            'status'  => 200,
+            'message' => 'You have successfully added your comment to thread.',
+            'data'    => $thread->addComment($request->all())
+        ], 200);
     }
 
     /**
@@ -50,7 +63,11 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        return $thread;
+        return response()->json([
+            'status'  => 200,
+            'message' => '',
+            'data'    => $thread
+        ], 200);
     }
 
     /**
@@ -62,16 +79,29 @@ class ThreadController extends Controller
      */
     public function update(ThreadRequest $request, Thread $thread)
     {
-        if($thread->user == $request->user) {
+        if($thread->user->id == auth()->user()->id) {
             if($thread->canEdit()){
                 $thread->update($request->all());
 
-                return $thread;
+                return response()->json([
+                    'status'  => 200,
+                    'message' => 'You have successfully updated the thread.',
+                    'data'    => $thread
+                ], 200);
             }
-            return false;
+
+            return response()->json([
+                'status'  => 417,
+                'message' => 'Allowed time for edit the thread is 6 hours after you created it.',
+                'data'    => []
+            ], 417);
         }
 
-        return response(false, 401);
+        return response()->json([
+            'status'  => 401,
+            'message' => 'You can only update the posts you created.',
+            'data'    => []
+        ], 401);
     }
 
     /**
@@ -82,12 +112,23 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        if($thread->user == $request->user) {
+        if($thread->user->id == auth()->user()->id) {
+            foreach($thread->comments as $comment){
+                $comment->delete();
+            }
             $thread->delete();
 
-            return true;
+            return response()->json([
+                'status'  => 200,
+                'message' => 'You have successfully deleted the thread and all comments related to it.',
+                'data'    => []
+            ], 200);
         }
 
-        return response(false, 401);
+        return response()->json([
+            'status'  => 401,
+            'message' => 'You can only delete the posts you created.',
+            'data'    => []
+        ], 401);
     }
 }

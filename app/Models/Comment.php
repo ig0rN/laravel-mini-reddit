@@ -21,4 +21,17 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function delete()
+    {
+        $x = parent::delete();
+
+        if($x == true) {
+            $relations = $this->comments;
+            
+            foreach($relations as $relation){
+                $relation->delete();
+            }
+        }
+    }
 }
