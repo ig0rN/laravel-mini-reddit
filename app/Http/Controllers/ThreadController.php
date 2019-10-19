@@ -40,22 +40,6 @@ class ThreadController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\CommentRequest  $request
-     * @param  \App\Models\Thread  $thread
-     * @return \Illuminate\Http\Response
-     */
-    public function reply(CommentRequest $request, Thread $thread)
-    {
-        return response()->json([
-            'status'  => 200,
-            'message' => 'You have successfully added your comment to thread.',
-            'data'    => $thread->addComment($request->all())
-        ], 200);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Thread  $thread
@@ -130,5 +114,21 @@ class ThreadController extends Controller
             'message' => 'You can only delete the posts you created.',
             'data'    => []
         ], 401);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\CommentRequest  $request
+     * @param  \App\Models\Thread  $thread
+     * @return \Illuminate\Http\Response
+     */
+    public function reply(CommentRequest $request, Thread $thread)
+    {
+        return response()->json([
+            'status'  => 200,
+            'message' => 'You have successfully added your comment to thread.',
+            'data'    => $thread->addComment($request->all())
+        ], 200);
     }
 }

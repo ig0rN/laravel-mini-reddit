@@ -20,9 +20,9 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/threads', 'ThreadController@index');
     Route::post('/threads', 'ThreadController@store');
     Route::get('/threads/{thread}', 'ThreadController@show');
-    Route::post('/threads/{thread}', 'ThreadController@reply');
     Route::put('/threads/{thread}', 'ThreadController@update');
     Route::delete('/threads/{thread}', 'ThreadController@destroy');
+    Route::post('/threads/{thread}', 'ThreadController@reply');
 
     Route::get('/comments/{comment}', 'CommentController@show');
     Route::post('/comments/{comment}', 'CommentController@reply');
