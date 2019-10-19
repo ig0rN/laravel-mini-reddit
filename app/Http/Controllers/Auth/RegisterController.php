@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +54,22 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+    }
+    
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param Request $request
+     * @return \App\Models\User
+     */
+    public function register(Request $request)
+    {
+        $user = $this->create($request->all());
+
+        return response()->json([
+            'message' => 'Successfully created user!',
+            'user' => $user
+        ], 201);
     }
 
     /**
