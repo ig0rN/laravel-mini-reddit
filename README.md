@@ -18,9 +18,6 @@
     3) other logic
     4) testing app via Postman
     5) writing documentation
-- I didn't make FE because my main goal is to provide a good BE in the deadline of 9 hours because I'm applying for BE Dev.
-- If it's necessary I can easily make some simple bootstrap pages and show data with JQuery.
-- 21.10. 01:17 It came to my mind that I forgot to handle exception for route model binding(I don't expect that you will count this)
 
 ## API endpoints
 
