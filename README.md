@@ -1,5 +1,16 @@
-# eyesee-reddit mini app
- 
+# Mini Reddit
+
+## Description
+
+Mini project created using Laravel framework
+
+System has:
+
+    - Threads
+    - Threads can be commented
+    - Comment can be commented ( nested comments )
+    - All CRUD operations via API
+
 ## Installation
 
 - pull repository from git
@@ -11,7 +22,6 @@
 
 ## Other notes about project
 
-- This is my first real API project. Until now I worked in Laravel just with blades and practiced API beside.
 - I focused on the main thing such as:
     1) registration / login
     2) CRUD
